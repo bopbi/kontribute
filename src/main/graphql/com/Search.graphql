@@ -5,12 +5,10 @@ query Contribution($query: String!) {
                 id
                 title
                 body
-                bodyText
                 bodyHTML
                 commits(last: 10) {
                     nodes {
                         commit {
-                            messageBody
                             message
                             messageBodyHTML
                             committer {
@@ -19,6 +17,17 @@ query Contribution($query: String!) {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+query Issues($query: String!) {
+    search(query: $query, type: ISSUE, last: 10) {
+        nodes {
+            ... on Issue {
+                title
+                url
             }
         }
     }
