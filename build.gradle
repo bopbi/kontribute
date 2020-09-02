@@ -1,0 +1,33 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.0'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.0'
+    id 'com.apollographql.apollo' version'2.3.0'
+}
+
+group 'com.bobbyprabowo'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+apollo {
+    // instruct the compiler to generate Kotlin models
+    generateKotlinModels.set(true)
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation("com.apollographql.apollo:apollo-rx3-support:2.3.0")
+    implementation 'org.apache.poi:poi-ooxml:3.9'
+    implementation 'io.github.url-detector:url-detector:0.1.23'
+    implementation 'com.charleskorn.kaml:kaml:0.20.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}

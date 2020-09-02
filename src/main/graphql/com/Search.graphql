@@ -1,0 +1,25 @@
+query Contribution($query: String!) {
+    search(query: $query, type: ISSUE, last: 100) {
+        nodes {
+            ... on PullRequest {
+                id
+                title
+                body
+                bodyText
+                bodyHTML
+                commits(last: 10) {
+                    nodes {
+                        commit {
+                            messageBody
+                            message
+                            messageBodyHTML
+                            committer {
+                                name
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
