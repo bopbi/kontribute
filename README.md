@@ -6,7 +6,7 @@ the tool uses the github graphql v4 API
 
 Features:
 - generate XLS for user contribution
-- link the used contribution to a issue => TBD
+- link the used contribution to a issue
 
 ## Setup
 you need a personal access token, please configure it by following https://developer.github.com/v4/guides/forming-calls/#authenticating-with-graphql
