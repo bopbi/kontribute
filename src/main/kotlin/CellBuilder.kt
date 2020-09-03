@@ -12,7 +12,8 @@ class CellBuilder {
             println("Process Response for ${contributionQuery.query}")
             val rows = mutableListOf<List<Any>>()
             rows.add(listOf(""))
-            val urlIssues = mutableListOf<String>()
+            val sprintUrlIssues = mutableListOf<String>()
+            val sprintActors = mutableListOf<String>()
             result.data?.search?.nodes?.forEachIndexed { number, node ->
                 node?.asPullRequest?.let { pullRequest ->
                     rows.add(listOf(number + 1, "Title", pullRequest.title))
@@ -51,15 +52,25 @@ class CellBuilder {
                     }
                     val urlForDisplay = filterUrlForDisplay(urlList)
                     rows.add(listOf("", "url", urlForDisplay.toString()))
-                    urlIssues.addAll(urlForDisplay)
+                    sprintUrlIssues.addAll(urlForDisplay)
                     actorList.addAll(filterActor(urlList))
-                    rows.add(listOf("", "Actor", actorList.distinct().toString()))
+                    val actorsForDisplay = actorList.distinct()
+                    rows.add(listOf("", "Actor", actorsForDisplay.toString()))
+                    sprintActors.addAll(actorsForDisplay)
                     val issueWeight = getWeight(issueMap, urlForDisplay)
                     rows.add(listOf("", "Weight", issueWeight))
                 }
             }
             rows.add(listOf(""))
-            rows.add(listOf("", "Issue Handled", urlIssues.distinct().toString()))
+            rows.add(listOf("", "Issue Handled"))
+            sprintUrlIssues.distinct().forEach {url ->
+                rows.add(listOf("", url))
+            }
+            rows.add(listOf(""))
+            rows.add(listOf("", "Actors"))
+            sprintActors.distinct().forEach { actor ->
+                rows.add(listOf("", actor))
+            }
             return rows
         }
 
