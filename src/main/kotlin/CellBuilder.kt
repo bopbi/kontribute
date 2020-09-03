@@ -12,7 +12,6 @@ class CellBuilder {
             println("Process Response for ${contributionQuery.query}")
             val rows = mutableListOf<List<Any>>()
             rows.add(listOf(""))
-            val weights = mutableListOf<Int>()
             val urlIssues = mutableListOf<String>()
             result.data?.search?.nodes?.forEachIndexed { number, node ->
                 node?.asPullRequest?.let { pullRequest ->
@@ -57,12 +56,10 @@ class CellBuilder {
                     rows.add(listOf("", "Actor", actorList.distinct().toString()))
                     val issueWeight = getWeight(issueMap, urlForDisplay)
                     rows.add(listOf("", "Weight", issueWeight))
-                    weights.add(issueWeight)
                 }
             }
             rows.add(listOf(""))
-            rows.add(listOf("", "Total Weight", weights.sum()))
-            rows.add(listOf("", "Issue Handled", urlIssues.toString()))
+            rows.add(listOf("", "Issue Handled", urlIssues.distinct().toString()))
             return rows
         }
 
