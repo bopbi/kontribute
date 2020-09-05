@@ -62,9 +62,11 @@ class CellBuilder {
                 }
             }
             rows.add(listOf(""))
-            rows.add(listOf("", "Issue Handled"))
+            rows.add(listOf("", "Issue Handled", "Title", "Weight"))
             sprintUrlIssues.distinct().forEach {url ->
-                rows.add(listOf("", url))
+                val issueTitle = getIssueTitle(issueMap, url)
+                val issueWeight = getWeight(issueMap, listOf(url))
+                rows.add(listOf("", url, issueTitle, issueWeight))
             }
             rows.add(listOf(""))
             rows.add(listOf("", "Actors"))
@@ -97,6 +99,10 @@ class CellBuilder {
                     .replace("http://", "", true)
                     .replace("/", "", true)
             }
+        }
+
+        private fun getIssueTitle(issueMap: Map<String, IssueWeight>, url: String): String {
+            return issueMap[url]?.title ?: "N/A on the Mapper"
         }
 
         private fun getWeight(issueMap: Map<String, IssueWeight>, urlList: List<String>): Int {
