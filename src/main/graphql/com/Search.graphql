@@ -23,7 +23,7 @@ query Contribution($query: String!) {
 }
 
 query Issues($query: String!) {
-    search(query: $query, type: ISSUE, last: 10) {
+    search(query: $query, type: ISSUE, last: 100) {
         nodes {
             ... on Issue {
                 title
