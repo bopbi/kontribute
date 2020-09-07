@@ -87,6 +87,8 @@ class CellBuilder {
         private fun filterUrlForDisplay(urlList: List<String>): List<String> {
             return urlList.distinct().filter { url ->
                 !url.contains("@quipper.com", true)
+            }.filter {url ->
+                url.contains("https://github.com/quipper/", true)
             }
         }
 
