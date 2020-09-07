@@ -61,6 +61,14 @@ class Kontribute {
             .map {result ->
                 IssueMapper.generateMap(result)
             }
+            .toList()
+            .map { issueMaps ->
+                val combineMaps = mutableMapOf<String, IssueWeight>()
+                issueMaps.forEach { issueMap ->
+                    combineMaps.putAll(issueMap)
+                }
+                combineMaps
+            }
             .flatMap { issueMap ->
                 Observable
                     .concat(pullRequestQueries)
@@ -68,9 +76,7 @@ class Kontribute {
                         CellBuilder.buildSheetsData(issueMap, result)
                     }
                     .toList()
-                    .toObservable()
             }
-            .firstOrError()
             .map { sheets ->
                 CellWriter.writeCells(FILE_NAME, settings, sheets)
             }
