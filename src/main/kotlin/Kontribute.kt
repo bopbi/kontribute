@@ -37,7 +37,8 @@ class Kontribute {
             )
             .build()
 
-        val FILE_NAME = "$currentDir${File.separator}result_${settings.userToCheck}.xlsx"
+        val repoName = settings.repoToCheck.split("/").last()
+        val FILE_NAME = "$currentDir${File.separator}result_${repoName}_${settings.userToCheck}.xlsx"
         val pullRequestQueries = settings.sprintList.map { sprint ->
             val dateRange = sprint.duration
             "repo:${settings.repoToCheck} is:pr is:merged merged:$dateRange author:${settings.userToCheck}"
