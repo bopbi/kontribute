@@ -17,14 +17,27 @@ modify the settings.yml to include the information below:
 - repo to check
 - sprint list
 
+note: 
 please use java 11 or higher
+make sure you put the jar and the settings.yaml on the same directory 
 
-## Execute
-put the jar and the settings.yaml on the same directory then run the command below
+## Generate Contribution List
+the command below will generate the contribution list
 ```
 java -jar Kontribute.main.jar
 ```
 
+## Generate PR Reviewer List
+the command below will generate the contribution list
+```
+java -jar Kontribute.main.jar r
+```
+
+## Generate PR Reviewer and Contribution List
+the command below will generate the pr review and the contribution list
+```
+java -jar Kontribute.main.jar r k
+```
 
 License
 --------
