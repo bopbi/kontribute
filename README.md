@@ -10,12 +10,20 @@ Features:
 
 ## Setup
 you need a personal access token, please configure it by following https://developer.github.com/v4/guides/forming-calls/#authenticating-with-graphql
-
+get the jar and the settings.yaml from the release
 modify the settings.yml to include the information below:
 - token
 - user to check
 - repo to check
 - sprint list
+
+please use java 11 or higher
+
+## Execute
+put the jar and the settings.yaml on the same directory then run the command below
+```
+java -jar Kontribute.main.jar
+```
 
 
 License
