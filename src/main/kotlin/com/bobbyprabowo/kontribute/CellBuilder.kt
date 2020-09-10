@@ -1,6 +1,7 @@
 package com.bobbyprabowo.kontribute
 
 import com.ContributionQuery
+import com.ReviewQuery
 import com.apollographql.apollo.api.Response
 import com.linkedin.urls.Url
 import com.linkedin.urls.detection.UrlDetector
@@ -9,7 +10,21 @@ import com.linkedin.urls.detection.UrlDetectorOptions
 class CellBuilder {
 
     companion object {
-        fun buildSheetsData(issueMap: Map<String, IssueWeight>, result: Response<ContributionQuery.Data>): List<List<Any>> {
+
+        fun buildReviewData(result: Response<ReviewQuery.Data>): List<List<Any>> {
+            val reviewQuery = result.operation as ReviewQuery
+            println("Process Response for ${reviewQuery.query}")
+            val rows = mutableListOf<List<Any>>()
+            rows.add(listOf("no", "url", "title"))
+            result.data?.search?.nodes?.forEachIndexed { number, node ->
+                node?.asPullRequest?.let { pullRequest ->
+                    rows.add(listOf(number + 1, pullRequest.url, pullRequest.title))
+                }
+            }
+            return rows
+        }
+
+        fun buildContributionData(issueMap: Map<String, IssueWeight>, result: Response<ContributionQuery.Data>): List<List<Any>> {
             val contributionQuery = result.operation as ContributionQuery
             println("Process Response for ${contributionQuery.query}")
             val rows = mutableListOf<List<Any>>()

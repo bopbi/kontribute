@@ -32,3 +32,14 @@ query Issues($query: String!) {
         }
     }
 }
+
+query Review($query: String!) {
+    search(query: $query, type: ISSUE, last: 100) {
+        nodes {
+            ... on PullRequest {
+                title
+                url
+            }
+        }
+    }
+}

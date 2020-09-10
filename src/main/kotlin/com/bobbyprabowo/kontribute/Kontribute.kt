@@ -2,6 +2,7 @@ package com.bobbyprabowo.kontribute
 
 import com.ContributionQuery
 import com.IssuesQuery
+import com.ReviewQuery
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.rx3.rxQuery
 import com.charleskorn.kaml.Yaml
@@ -17,7 +18,22 @@ class Kontribute {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            Kontribute().execute()
+            val runReviewer = args.any { paramString ->
+                paramString == "r"
+            }
+
+            val runContribute = args.any { paramString ->
+                paramString == "k"
+            }
+
+            val kontribute = Kontribute()
+            if (runReviewer) { // run only r
+                kontribute.getReviewContribution()
+            }
+
+            if (runContribute) { // run only k
+                kontribute.execute()
+            }
         }
     }
 
@@ -76,12 +92,57 @@ class Kontribute {
                 Observable
                     .concat(pullRequestQueries)
                     .map { result ->
-                        CellBuilder.buildSheetsData(issueMap, result)
+                        CellBuilder.buildContributionData(issueMap, result)
                     }
                     .toList()
             }
             .map { sheets ->
-                CellWriter.writeCells(FILE_NAME, settings, sheets)
+                CellWriter.writeContributionCells(FILE_NAME, settings, sheets)
+            }
+            .subscribe { _, error ->
+                if (error != null) {
+                    println(error)
+                }
+            }
+    }
+
+    fun getReviewContribution() {
+        val currentDir = Paths.get("").toAbsolutePath()
+        val settingsFile = File("$currentDir${File.separator}settings.yaml")
+
+        val source = FileSystem.SYSTEM.source(settingsFile).buffer()
+        val settingsString = source.readUtf8()
+
+        val settings = Yaml.default.decodeFromString(Settings.serializer(), settingsString)
+
+        val apolloClient = ApolloClient.builder()
+            .serverUrl("https://api.github.com/graphql")
+            .okHttpClient(
+                OkHttpClient.Builder()
+                    .addInterceptor(AuthorizationInterceptor(settings.githubAccessToken))
+                    .build()
+            )
+            .build()
+
+        val repoName = settings.repoToCheck.split("/").last()
+        val FILE_NAME = "$currentDir${File.separator}review_${repoName}_${settings.userToCheck}.xlsx"
+        val pullRequestQueries = settings.sprintList.map { sprint ->
+            val dateRange = sprint.duration
+            "repo:${settings.repoToCheck} is:pr is:closed merged:$dateRange reviewed-by:${settings.userToCheck} "
+        }.map { query ->
+            Observable.defer {
+                apolloClient.rxQuery(ReviewQuery(query = query))
+            }
+        }
+
+        Observable
+            .concat(pullRequestQueries)
+            .map { result ->
+                CellBuilder.buildReviewData(result)
+            }
+            .toList()
+            .map { sheets ->
+                CellWriter.writeReviewCells(FILE_NAME, settings, sheets)
             }
             .subscribe { _, error ->
                 if (error != null) {
