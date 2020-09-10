@@ -1,3 +1,5 @@
+package com.bobbyprabowo.kontribute
+
 import com.ContributionQuery
 import com.IssuesQuery
 import com.apollographql.apollo.ApolloClient
@@ -10,14 +12,14 @@ import okio.buffer
 import java.io.File
 import java.nio.file.Paths
 
-
-fun main() {
-
-    Kontribute().execute()
-
-}
-
 class Kontribute {
+
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            Kontribute().execute()
+        }
+    }
 
     fun execute() {
         val currentDir = Paths.get("").toAbsolutePath()

@@ -1,3 +1,5 @@
+package com.bobbyprabowo.kontribute
+
 @kotlinx.serialization.Serializable
 data class Settings(
     val githubAccessToken: String,

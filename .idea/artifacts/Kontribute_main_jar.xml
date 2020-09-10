@@ -1,0 +1,42 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Kontribute.main:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Kontribute_main_jar</output-path>
+    <root id="archive" name="Kontribute.main.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="Kontribute.main" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.benasher44/uuid-jvm/0.1.0/d2315de04690befa99682dc3fb77700fa9f205e1/uuid-jvm-0.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.apollographql.apollo/apollo-api-jvm/2.3.0/36b70cb24f5359c3abf42fe52af3ee2aeaba2310/apollo-api-jvm-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.url-detector/url-detector/0.1.23/4e2d95ad5381c69f00eb9dcba595a9e70fb4d422/url-detector-0.1.23.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.apollographql.apollo/apollo-http-cache-api/2.3.0/13272f77bf548b0959c2b4357e93ff7836ae3fd2/apollo-http-cache-api-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.0/1c752cce0ead8d504ccc88a4fed6471fd83ab0dd/kotlin-stdlib-common-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.apollographql.apollo/apollo-normalized-cache-jvm/2.3.0/c2ba9ce961fd042979e0c5e0613d64eed31c2118/apollo-normalized-cache-jvm-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-serialization-core-jvm/1.0.0-RC/b757455a4105aa2048703075be26e2eee4d04632/kotlinx-serialization-core-jvm-1.0.0-RC.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.charleskorn.kaml/kaml/0.20.0/ba87fe23d666195fd7586a9806a945bccc681ec4/kaml-0.20.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/stax/stax-api/1.0.1/49c100caf72d658aca8e58bd74a4ba90fa2b0d70/stax-api-1.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.xmlbeans/xmlbeans/2.3.0/8704dcf5c9f10265a08f5020b0fab70eb64ac3c4/xmlbeans-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/dom4j/dom4j/1.6.1/5d3ccc056b6f056dbf0dddfdf43894b9065a8f94/dom4j-1.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.1/6738a2da2202ce360f0af90aba005c1e05a2c4cd/commons-lang3-3.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.5/cf993e250ff71804754ec2734a16f23c0be99f70/commons-codec-1.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi-ooxml-schemas/3.9/4c514498f0e82cccfdd3208b9caff2f45158db4a/poi-ooxml-schemas-3.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi-ooxml/3.9/bbe83c739d22eecfacd06d7e0b99ba13277040ed/poi-ooxml-3.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.4.0/9cc187c3dfaf6e4001bdf962e3cdadff7690261b/kotlin-stdlib-jdk7-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.4.0/e3765b66f0610afc92053ff1a93a87a544fca2b/kotlin-stdlib-jdk8-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.reactivex.rxjava3/rxjava/3.0.4/35debb1a7b43bc67e053084f662fa1086b4358aa/rxjava-3.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.apollographql.apollo/apollo-runtime/2.3.0/61f5c40c56c1cf4f99f2cb98287fc3b000cf2f3a/apollo-runtime-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.12.11/301adbdad6ff9d613a2ba4772443560d25df5538/okhttp-3.12.11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.reactivestreams/reactive-streams/1.0.3/d9fb7a7926ffa635b3dcaa5049fb2bfa25b3e7d0/reactive-streams-1.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.apollographql.apollo/apollo-rx3-support/2.3.0/b340818f29d3e07b80bcecf62b786ad1ef69ee1e/apollo-rx3-support-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.0/63e75298e93d4ae0b299bb869cf0c627196f8843/kotlin-stdlib-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi/3.9/5d5e41354e88322e4bc590b31f3d2d1d52b3e6ac/poi-3.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.nytimes.android/cache/2.0.2/dd9712ca1fffcb2d5dfbe2878c1b788be9bc7d76/cache-2.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.1/f7be08ec23c21485b9b5a1cf1654c2ec8c58168d/jsr305-3.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/2.7.0/1181a029fa94760ccf46f264bc06ca2e60262f8f/okio-jvm-2.7.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.snakeyaml/snakeyaml-engine/2.1/16377c3c7d093f4e6b733c69898a888c9fc88034/snakeyaml-engine-2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.apollographql.apollo/apollo-normalized-cache-api-jvm/2.3.0/214cdb2c9595965002058e15cf8b235f0dea0cd9/apollo-normalized-cache-api-jvm-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xml-apis/xml-apis/1.0.b2/3136ca936f64c9d68529f048c2618bd356bf85c9/xml-apis-1.0.b2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

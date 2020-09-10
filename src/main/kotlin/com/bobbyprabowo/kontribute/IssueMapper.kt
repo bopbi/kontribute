@@ -1,3 +1,5 @@
+package com.bobbyprabowo.kontribute
+
 import com.IssuesQuery
 import com.apollographql.apollo.api.Response
 
