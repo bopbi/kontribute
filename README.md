@@ -17,6 +17,8 @@ modify the settings.yml to include the information below:
 - repo to check
 - sprint list
 
+please use java 11 or higher
+
 ## Execute
 put the jar and the settings.yaml on the same directory then run the command below
 ```
