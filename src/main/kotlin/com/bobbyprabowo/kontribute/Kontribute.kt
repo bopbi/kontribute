@@ -26,13 +26,18 @@ class Kontribute {
                 paramString == "k"
             }
 
-            val kontribute = Kontribute()
-            if (runReviewer) { // run only r
-                kontribute.getReviewContribution()
-            }
+            val noParam = !runContribute && !runReviewer
 
-            if (runContribute) { // run only k
+            val kontribute = Kontribute()
+            if (noParam) {
                 kontribute.execute()
+            } else {
+                if (runReviewer) { // run only r
+                    kontribute.getReviewContribution()
+                }
+                if (runContribute) { // run only k
+                    kontribute.execute()
+                }
             }
         }
     }
