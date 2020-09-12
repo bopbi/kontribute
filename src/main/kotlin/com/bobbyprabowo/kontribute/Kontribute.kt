@@ -133,7 +133,7 @@ class Kontribute {
         val FILE_NAME = "$currentDir${File.separator}review_${repoName}_${settings.userToCheck}.xlsx"
         val pullRequestQueries = settings.sprintList.map { sprint ->
             val dateRange = sprint.duration
-            "repo:${settings.repoToCheck} is:pr is:closed merged:$dateRange reviewed-by:${settings.userToCheck} "
+            "repo:${settings.repoToCheck} is:pr is:closed merged:$dateRange reviewed-by:${settings.userToCheck} author:${settings.userToCheck}"
         }.map { query ->
             Observable.defer {
                 apolloClient.rxQuery(ReviewQuery(query = query))
