@@ -36,4 +36,10 @@ jar {
     manifest {
         attributes 'Main-Class': 'com.bobbyprabowo.kontribute.Kontribute'
     }
+
+    // This line of code recursively collects and copies all of a project's files
+    // and adds them to the JAR itself. One can extend this task, to skip certain
+    // files or particular types at will
+    archivesBaseName = project.name + '-all'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }
