@@ -3,6 +3,10 @@ package com.bobbyprabowo.kontribute
 import com.ContributionQuery
 import com.ReviewQuery
 import com.apollographql.apollo.api.Response
+import com.bobbyprabowo.kontribute.filter.ActorFilter
+import com.bobbyprabowo.kontribute.filter.UrlFilter
+import com.bobbyprabowo.kontribute.filter.UrlForDisplayFilter
+import com.bobbyprabowo.kontribute.model.IssueWeight
 import com.linkedin.urls.Url
 import com.linkedin.urls.detection.UrlDetector
 import com.linkedin.urls.detection.UrlDetectorOptions
@@ -25,6 +29,9 @@ class CellBuilder {
         }
 
         fun buildContributionData(issueMap: Map<String, IssueWeight>, result: Response<ContributionQuery.Data>): List<List<Any>> {
+            val actorFilter: UrlFilter = ActorFilter()
+            val urlForDisplayFilter : UrlFilter = UrlForDisplayFilter()
+
             val contributionQuery = result.operation as ContributionQuery
             println("Process Response for ${contributionQuery.query}")
             val rows = mutableListOf<List<Any>>()
@@ -67,10 +74,10 @@ class CellBuilder {
                             }
                         }
                     }
-                    val urlForDisplay = filterUrlForDisplay(urlList)
+                    val urlForDisplay = urlForDisplayFilter.execute(urlList)
                     rows.add(listOf("", "url", urlForDisplay.toString()))
                     sprintUrlIssues.addAll(urlForDisplay)
-                    actorList.addAll(filterActor(urlList))
+                    actorList.addAll(actorFilter.execute(urlList))
                     val actorsForDisplay = actorList.distinct()
                     rows.add(listOf("", "Actor", actorsForDisplay.toString()))
                     sprintActors.addAll(actorsForDisplay)
@@ -98,27 +105,6 @@ class CellBuilder {
                 url.fullUrl
             }.filter { url ->
                 !url.contains("https://user-images.githubusercontent.com/", ignoreCase = true)
-            }
-        }
-
-        private fun filterUrlForDisplay(urlList: List<String>): List<String> {
-            return urlList.distinct().filter { url ->
-                !url.contains("@quipper.com", true)
-            }.filter {url ->
-                url.contains("https://github.com/quipper/", true)
-            }
-        }
-
-        private fun filterActor(urlList: List<String>): List<String> {
-            return urlList.filter { url ->
-                url.contains("@quipper.com", true) ||
-                        url.contains("@gamalinda.com", true)
-            }.map { url ->
-                url.replace("@quipper.com", "", true)
-                    .replace("@gamalinda.com", "", true)
-                    .replace("http://href=mailto:", "", true)
-                    .replace("http://", "", true)
-                    .replace("/", "", true)
             }
         }
 

@@ -5,6 +5,7 @@ import com.IssuesQuery
 import com.ReviewQuery
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.rx3.rxQuery
+import com.bobbyprabowo.kontribute.model.IssueWeight
 import com.charleskorn.kaml.Yaml
 import io.reactivex.rxjava3.core.Observable
 import okhttp3.OkHttpClient

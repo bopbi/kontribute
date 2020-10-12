@@ -1,4 +1,4 @@
-package com.bobbyprabowo.kontribute
+package com.bobbyprabowo.kontribute.model
 
 data class IssueWeight(
     val title: String,

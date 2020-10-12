@@ -2,6 +2,7 @@ package com.bobbyprabowo.kontribute
 
 import com.IssuesQuery
 import com.apollographql.apollo.api.Response
+import com.bobbyprabowo.kontribute.model.IssueWeight
 
 class IssueMapper {
 
@@ -21,20 +22,23 @@ class IssueMapper {
 
         private fun getWeight(issue: IssuesQuery.AsIssue): Int {
             return when {
-                issue.title.contains("[SP=1]") -> {
+                issue.title.contains("[SP=1]", true) -> {
                     1
                 }
-                issue.title.contains("[SP=2]") -> {
+                issue.title.contains("[SP=2]", true) -> {
                     2
                 }
-                issue.title.contains("[SP=3]") -> {
+                issue.title.contains("[SP=3]", true) -> {
                     3
                 }
-                issue.title.contains("[SP=5]") -> {
+                issue.title.contains("[SP=5]", true) -> {
                     5
                 }
-                issue.title.contains("[SP=8]") -> {
+                issue.title.contains("[SP=8]", true) -> {
                     8
+                }
+                issue.title.contains("[SP=13]", true) -> {
+                    13
                 }
                 else -> {
                     0
