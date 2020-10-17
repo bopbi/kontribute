@@ -1,6 +1,14 @@
 githubAccessToken: xxxxx
-userToCheck: xxx
-repoToCheck: xxx/xxxx
+userList:
+  -
+    username: xxx
+  -
+    username: xxx
+repoList:
+  -
+    name: xxx/xxxx
+  -
+    name: xxx/xxxx
 sprintList:
   -
     title: sprint 31
