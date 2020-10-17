@@ -13,9 +13,9 @@ you need a personal access token, please configure it by following https://devel
 get the jar and the settings.yaml from the release
 modify the settings.yml to include the information below:
 - token
-- user to check
-- repo to check
-- sprint list
+- users list to check
+- repos list to check
+- sprint date range list
 
 note: 
 please use java 11 or higher
