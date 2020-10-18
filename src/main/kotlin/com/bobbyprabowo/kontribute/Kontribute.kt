@@ -5,6 +5,8 @@ import com.IssuesQuery
 import com.ReviewQuery
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.rx3.rxQuery
+import com.bobbyprabowo.kontribute.domain.IssueMapper
+import com.bobbyprabowo.kontribute.domain.PairFinder
 import com.bobbyprabowo.kontribute.model.IssueWeight
 import com.bobbyprabowo.kontribute.model.Settings
 import com.charleskorn.kaml.Yaml
@@ -112,14 +114,24 @@ class Kontribute {
                                         CellBuilder.buildContributionData(issueMap, result)
                                     }
                                     .toList()
-                                    .map { sheets ->
-                                        CellWriter.writeContributionCells(fileName, settings, sheets)
+                                    .doOnSuccess { contributions ->
+                                        CellWriter.writeContributionCells(fileName, settings, contributions)
                                     }
                                     .toObservable()
                             }
                     }
             }
-            .subscribe()
+            .toList()
+            .doOnSuccess { wholeContribution ->
+                val pairedContribution = PairFinder.execute(wholeContribution)
+                val fileName = "$currentDir${File.separator}pair_session.xlsx"
+                CellWriter.writePairedContributionSheet(fileName, settings, pairedContribution)
+            }
+            .subscribe({
+                println("all is complete")
+            }, {error ->
+                println("oops error" + error.message)
+            })
     }
 
     fun getReviewContribution(currentDir: Path, settings: Settings, apolloClient: ApolloClient) {

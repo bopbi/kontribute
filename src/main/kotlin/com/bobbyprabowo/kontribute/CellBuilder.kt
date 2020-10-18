@@ -6,6 +6,7 @@ import com.apollographql.apollo.api.Response
 import com.bobbyprabowo.kontribute.filter.ActorFilter
 import com.bobbyprabowo.kontribute.filter.UrlFilter
 import com.bobbyprabowo.kontribute.filter.UrlForDisplayFilter
+import com.bobbyprabowo.kontribute.model.Contribution
 import com.bobbyprabowo.kontribute.model.IssueWeight
 import com.linkedin.urls.Url
 import com.linkedin.urls.detection.UrlDetector
@@ -28,34 +29,25 @@ class CellBuilder {
             return rows
         }
 
-        fun buildContributionData(issueMap: Map<String, IssueWeight>, result: Response<ContributionQuery.Data>): List<List<Any>> {
+        fun buildContributionData(issueMap: Map<String, IssueWeight>, result: Response<ContributionQuery.Data>): List<Contribution> {
             val actorFilter: UrlFilter = ActorFilter()
             val urlForDisplayFilter : UrlFilter = UrlForDisplayFilter()
 
             val contributionQuery = result.operation as ContributionQuery
             println("Process Response for ${contributionQuery.query}")
-            val rows = mutableListOf<List<Any>>()
-            rows.add(listOf(""))
-            val sprintUrlIssues = mutableListOf<String>()
-            val sprintActors = mutableListOf<String>()
-            result.data?.search?.nodes?.forEachIndexed { number, node ->
+            val sprintContribution = mutableListOf<Contribution>()
+            result.data?.search?.nodes?.forEach { node ->
                 node?.asPullRequest?.let { pullRequest ->
-                    rows.add(listOf(number + 1, "Title", pullRequest.title))
-                    rows.add(listOf("", "Body", pullRequest.body))
+
                     val actorList = mutableListOf<String>()
                     val bodyParser = UrlDetector(pullRequest.bodyHTML as String, UrlDetectorOptions.HTML)
                     val bodyFound = bodyParser.detect()
                     val urlList = filterUrl(bodyFound).toMutableList()
+                    val commitMessages = mutableListOf<String>()
                     pullRequest.commits.nodes?.let { commits ->
                         commits.forEach { node ->
                             node?.commit?.let { commit ->
-                                rows.add(
-                                    listOf(
-                                        "",
-                                        "Commit",
-                                        commit.message
-                                    )
-                                )
+                                commitMessages.add(commit.message)
                                 commit.committer?.name?.let { actor ->
                                     actorList.add(actor)
                                 }
@@ -74,30 +66,25 @@ class CellBuilder {
                             }
                         }
                     }
+
+
                     val urlForDisplay = urlForDisplayFilter.execute(urlList)
-                    rows.add(listOf("", "url", urlForDisplay.toString()))
-                    sprintUrlIssues.addAll(urlForDisplay)
                     actorList.addAll(actorFilter.execute(urlList))
                     val actorsForDisplay = actorList.distinct()
-                    rows.add(listOf("", "Actor", actorsForDisplay.toString()))
-                    sprintActors.addAll(actorsForDisplay)
                     val issueWeight = getWeight(issueMap, urlForDisplay)
-                    rows.add(listOf("", "Weight", issueWeight))
+
+                    val contribution = Contribution(
+                        title = pullRequest.title,
+                        body = pullRequest.body,
+                        commitMessages = commitMessages,
+                        actors = actorsForDisplay,
+                        urlIssues = urlForDisplay,
+                        weight = issueWeight
+                    )
+                    sprintContribution.add(contribution)
                 }
             }
-            rows.add(listOf(""))
-            rows.add(listOf("", "Issue Handled", "Title", "Weight"))
-            sprintUrlIssues.distinct().forEach {url ->
-                val issueTitle = getIssueTitle(issueMap, url)
-                val issueWeight = getWeight(issueMap, listOf(url))
-                rows.add(listOf("", url, issueTitle, issueWeight))
-            }
-            rows.add(listOf(""))
-            rows.add(listOf("", "Actors"))
-            sprintActors.distinct().forEach { actor ->
-                rows.add(listOf("", actor))
-            }
-            return rows
+            return sprintContribution
         }
 
         private fun filterUrl(urlList: List<Url>): List<String> {

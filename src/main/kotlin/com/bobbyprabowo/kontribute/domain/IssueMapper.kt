@@ -1,4 +1,4 @@
-package com.bobbyprabowo.kontribute
+package com.bobbyprabowo.kontribute.domain
 
 import com.IssuesQuery
 import com.apollographql.apollo.api.Response
