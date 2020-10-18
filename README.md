@@ -1,12 +1,11 @@
 Kontribute
 =========
-Tool to measure developer contribution to a Github Repo, this tool will generate an XLS that will contain the PR information, with its commit, url, contributor issue, sprint duration, and its weight
-
-the tool uses the github graphql v4 API
+Tool to measure developer contribution to a Github Repo on an XLS file, this tool uses the github graphql v4 API
 
 Features:
-- generate XLS for user contribution
-- link the used contribution to a issue
+- generate XLS for users contribution, on many repositories, and on many sprint interval
+- generate XLS for the pair programming when the commit use the co-author https://docs.github.com/en/free-pro-team@latest/github/committing-changes-to-your-project/creating-a-commit-with-multiple-authors 
+
 
 ## Setup
 you need a personal access token, please configure it by following https://developer.github.com/v4/guides/forming-calls/#authenticating-with-graphql
