@@ -111,7 +111,7 @@ class Kontribute {
                                 Observable
                                     .concat(pullRequestQueries)
                                     .map { result ->
-                                        CellBuilder.buildContributionData(issueMap, result)
+                                        CellBuilder.buildContributionData(repoName, issueMap, result)
                                     }
                                     .toList()
                                     .doOnSuccess { contributions ->

@@ -48,7 +48,7 @@ class CellWriter {
             println("Done")
         }
 
-        private fun formattingContributionList(contributionList: List<List<Contribution>>) : List<List<List<Any>>> {
+        private fun formattingContributionList(contributionList: List<List<Contribution>>): List<List<List<Any>>> {
             val sheets = mutableListOf<List<List<Any>>>()
             contributionList.forEach { sprintContribution ->
                 val rows = mutableListOf<List<Any>>()
@@ -70,10 +70,7 @@ class CellWriter {
                         )
                     }
                     rows.add(
-                        listOf("", "Url", contribution.urlIssues)
-                    )
-                    rows.add(
-                        listOf("", "Weight", contribution.weight)
+                        listOf("", "Url", contribution.urlIssues.toString())
                     )
                 }
                 rows.add(
@@ -81,13 +78,16 @@ class CellWriter {
                 )
 
                 rows.add(
-                    listOf("","Url", "Title", "Weight")
+                    listOf("", "Url", "Issue Title", "Weight")
                 )
 
-                sprintContribution.forEach { contribution ->
-                    // write contribution list
+                val sprintIssues = sprintContribution.map { contribution ->
+                    contribution.issues
+                }.flatten().distinctBy { issue -> issue.url  }
+
+                sprintIssues.forEach { issue ->
                     rows.add(
-                        listOf("", contribution.urlIssues, contribution.title, contribution.weight)
+                        listOf("", issue.url, issue.title, issue.weight)
                     )
                 }
 
@@ -113,41 +113,46 @@ class CellWriter {
             return sheets
         }
 
-        private fun formattingPairContributionList(contributionList: List<Contribution>) : List<List<List<Any>>> {
+        private fun formattingPairContributionList(contributionList: List<Contribution>): List<List<List<Any>>> {
             val sheets = mutableListOf<List<List<Any>>>()
             val rows = mutableListOf<List<Any>>()
-                rows.add(
-                    listOf("")
-                )
-                contributionList.forEachIndexed { rowNum, contribution ->
+            rows.add(
+                listOf("")
+            )
+            contributionList.forEachIndexed { rowNum, contribution ->
 
-                    // write contribution list
+                // write contribution list
+                rows.add(
+                    listOf(rowNum + 1, "Title", contribution.title)
+                )
+                rows.add(
+                    listOf("", "Body", contribution.body)
+                )
+                contribution.commitMessages.forEach { commitMessage ->
                     rows.add(
-                        listOf(rowNum + 1, "Title", contribution.title)
-                    )
-                    rows.add(
-                        listOf("", "Body", contribution.body)
-                    )
-                    contribution.commitMessages.forEach { commitMessage ->
-                        rows.add(
-                            listOf("", "Commit", commitMessage)
-                        )
-                    }
-                    rows.add(
-                        listOf("", "Url", contribution.urlIssues)
-                    )
-                    rows.add(
-                        listOf("", "Weight", contribution.weight)
+                        listOf("", "Commit", commitMessage)
                     )
                 }
                 rows.add(
-                    listOf("")
+                    listOf("", "Url", contribution.urlIssues.toString())
                 )
+            }
+            rows.add(
+                listOf("")
+            )
 
+            rows.add(
+                listOf("", "Url", "Issue Title", "Weight")
+            )
+            val sprintIssues = contributionList.map { contribution ->
+                contribution.issues
+            }.flatten().distinctBy { issue -> issue.url  }
+
+            sprintIssues.forEach { issue ->
                 rows.add(
-                    listOf("","Url", "Title", "Weight")
+                    listOf("", issue.url, issue.title, issue.weight)
                 )
-
+            }
 
 
             sheets.add(rows)
@@ -180,7 +185,7 @@ class CellWriter {
                         if (colData == "Title") {
                             startMergeRow = rowNum
                         }
-                        if (colData == "Weight") {
+                        if (colData == "Url") {
                             sheet.addMergedRegion(CellRangeAddress(startMergeRow, rowNum, 0, 0))
                         }
                     }

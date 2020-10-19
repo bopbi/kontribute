@@ -7,6 +7,7 @@ import com.bobbyprabowo.kontribute.filter.ActorFilter
 import com.bobbyprabowo.kontribute.filter.UrlFilter
 import com.bobbyprabowo.kontribute.filter.UrlForDisplayFilter
 import com.bobbyprabowo.kontribute.model.Contribution
+import com.bobbyprabowo.kontribute.model.Issue
 import com.bobbyprabowo.kontribute.model.IssueWeight
 import com.linkedin.urls.Url
 import com.linkedin.urls.detection.UrlDetector
@@ -29,7 +30,7 @@ class CellBuilder {
             return rows
         }
 
-        fun buildContributionData(issueMap: Map<String, IssueWeight>, result: Response<ContributionQuery.Data>): List<Contribution> {
+        fun buildContributionData(repoName: String, issueMap: Map<String, IssueWeight>, result: Response<ContributionQuery.Data>): List<Contribution> {
             val actorFilter: UrlFilter = ActorFilter()
             val urlForDisplayFilter : UrlFilter = UrlForDisplayFilter()
 
@@ -42,7 +43,7 @@ class CellBuilder {
                     val actorList = mutableListOf<String>()
                     val bodyParser = UrlDetector(pullRequest.bodyHTML as String, UrlDetectorOptions.HTML)
                     val bodyFound = bodyParser.detect()
-                    val urlList = filterUrl(bodyFound).toMutableList()
+                    val urlList = filterUrl(repoName, bodyFound).toMutableList()
                     val commitMessages = mutableListOf<String>()
                     pullRequest.commits.nodes?.let { commits ->
                         commits.forEach { node ->
@@ -54,15 +55,13 @@ class CellBuilder {
                                 val commitParser =
                                     UrlDetector(commit.messageBodyHTML as String, UrlDetectorOptions.HTML)
                                 val commitFound = commitParser.detect()
-                                urlList.addAll(commitFound.map { url ->
+                                val urls = commitFound.filter { url ->
+                                    url.fullUrl.contains("https://github.com/quipper/${repoName}/issues/", true)
+                                }.map { url ->
                                     url.fullUrl
                                         .replace(oldValue = "lt;", newValue = "", ignoreCase = true)
-                                }.filter { url ->
-                                    !url.contains(
-                                        "https://user-images.githubusercontent.com/",
-                                        ignoreCase = true
-                                    )
-                                })
+                                }.distinct()
+                                urlList.addAll(urls)
                             }
                         }
                     }
@@ -71,15 +70,16 @@ class CellBuilder {
                     val urlForDisplay = urlForDisplayFilter.execute(urlList)
                     actorList.addAll(actorFilter.execute(urlList))
                     val actorsForDisplay = actorList.distinct()
-                    val issueWeight = getWeight(issueMap, urlForDisplay)
-
+                    val issues = urlForDisplay.map {url ->
+                        getIssue(issueMap, url)
+                    }
                     val contribution = Contribution(
+                        issues = issues,
                         title = pullRequest.title,
                         body = pullRequest.body,
                         commitMessages = commitMessages,
                         actors = actorsForDisplay,
-                        urlIssues = urlForDisplay,
-                        weight = issueWeight
+                        urlIssues = urlForDisplay
                     )
                     sprintContribution.add(contribution)
                 }
@@ -87,16 +87,21 @@ class CellBuilder {
             return sprintContribution
         }
 
-        private fun filterUrl(urlList: List<Url>): List<String> {
+        private fun filterUrl(repoName: String, urlList: List<Url>): List<String> {
             return urlList.map { url ->
                 url.fullUrl
             }.filter { url ->
-                !url.contains("https://user-images.githubusercontent.com/", ignoreCase = true)
+                url.contains("https://github.com/quipper/${repoName}/issues/", ignoreCase = true)
             }
         }
 
-        private fun getIssueTitle(issueMap: Map<String, IssueWeight>, url: String): String {
-            return issueMap[url]?.title ?: "N/A on the Mapper"
+        private fun getIssue(issueMap: Map<String, IssueWeight>, url: String): Issue {
+            val issueWeight = issueMap[url]
+            return if (issueWeight == null) {
+                Issue(url = url, title = "N/A on the Mapper", weight = 0)
+            } else {
+                Issue(url = url, title = issueWeight.title, weight = issueWeight.weight)
+            }
         }
 
         private fun getWeight(issueMap: Map<String, IssueWeight>, urlList: List<String>): Int {
