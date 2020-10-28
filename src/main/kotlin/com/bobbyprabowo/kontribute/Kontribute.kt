@@ -136,7 +136,6 @@ class Kontribute {
 
     fun getReviewContribution(currentDir: Path, settings: Settings, apolloClient: ApolloClient) {
 
-
         Observable
             .fromIterable(settings.userList)
             .flatMap { user ->
@@ -161,8 +160,8 @@ class Kontribute {
                                 CellBuilder.buildReviewData(result)
                             }
                             .toList()
-                            .map { sheets ->
-                                CellWriter.writeReviewCells(fileName, settings, sheets)
+                            .doOnSuccess { reviewLists ->
+                                CellWriter.writeReviewCells(fileName, settings, reviewLists)
                             }
                     }
             }

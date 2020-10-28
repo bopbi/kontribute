@@ -9,6 +9,7 @@ import com.bobbyprabowo.kontribute.filter.UrlForDisplayFilter
 import com.bobbyprabowo.kontribute.model.Contribution
 import com.bobbyprabowo.kontribute.model.Issue
 import com.bobbyprabowo.kontribute.model.IssueWeight
+import com.bobbyprabowo.kontribute.model.Review
 import com.linkedin.urls.Url
 import com.linkedin.urls.detection.UrlDetector
 import com.linkedin.urls.detection.UrlDetectorOptions
@@ -17,17 +18,16 @@ class CellBuilder {
 
     companion object {
 
-        fun buildReviewData(result: Response<ReviewQuery.Data>): List<List<Any>> {
+        fun buildReviewData(result: Response<ReviewQuery.Data>): List<Review> {
             val reviewQuery = result.operation as ReviewQuery
             println("Process Response for ${reviewQuery.query}")
-            val rows = mutableListOf<List<Any>>()
-            rows.add(listOf("no", "url", "title"))
-            result.data?.search?.nodes?.forEachIndexed { number, node ->
+            val reviewList = mutableListOf<Review>()
+            result.data?.search?.nodes?.forEach { node ->
                 node?.asPullRequest?.let { pullRequest ->
-                    rows.add(listOf(number + 1, pullRequest.url, pullRequest.title))
+                    reviewList.add(Review(pullRequest.url as String, pullRequest.title))
                 }
             }
-            return rows
+            return reviewList
         }
 
         fun buildContributionData(repoName: String, issueMap: Map<String, IssueWeight>, result: Response<ContributionQuery.Data>): List<Contribution> {
@@ -101,12 +101,6 @@ class CellBuilder {
                 Issue(url = url, title = "N/A on the Mapper", weight = 0)
             } else {
                 Issue(url = url, title = issueWeight.title, weight = issueWeight.weight)
-            }
-        }
-
-        private fun getWeight(issueMap: Map<String, IssueWeight>, urlList: List<String>): Int {
-            return urlList.sumBy {url ->
-                issueMap[url]?.weight ?: 0
             }
         }
 

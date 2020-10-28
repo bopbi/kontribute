@@ -1,6 +1,7 @@
 package com.bobbyprabowo.kontribute
 
 import com.bobbyprabowo.kontribute.model.Contribution
+import com.bobbyprabowo.kontribute.model.Review
 import com.bobbyprabowo.kontribute.model.Settings
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.util.CellRangeAddress
@@ -12,7 +13,33 @@ import java.io.IOException
 class CellWriter {
 
     companion object {
-        fun writeReviewCells(fileName: String, settings: Settings, sheets: List<List<List<Any>>>) {
+
+        private fun formattingReviewList(reviewLists: List<List<Review>>): List<List<List<Any>>> {
+            val sheets = mutableListOf<List<List<Any>>>()
+            reviewLists.forEach { reviewContribution ->
+                val rows = mutableListOf<List<Any>>()
+                rows.add(
+                    listOf("")
+                )
+                rows.add(listOf("no", "url", "title"))
+                reviewContribution.forEachIndexed { rowNum, review ->
+
+                    // write contribution list
+                    rows.add(
+                        listOf(rowNum + 1, review.url, review.pullRequestTitle)
+                    )
+                }
+                rows.add(
+                    listOf("")
+                )
+
+                sheets.add(rows)
+            }
+            return sheets
+        }
+
+        fun writeReviewCells(fileName: String, settings: Settings, reviewLists: List<List<Review>>) {
+            val sheets = formattingReviewList(reviewLists)
             val workbook = XSSFWorkbook()
             val cellStyle = workbook.createCellStyle()
             sheets.forEachIndexed { index, data ->
