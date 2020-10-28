@@ -11,39 +11,6 @@ repoList:
     name: xxx/xxxx
 sprintList:
   -
-    title: sprint 31
-    duration: 2020-03-17..2020-03-30
-  -
-    title: sprint 32
-    duration: 2020-03-31..2020-04-13
-  -
-    title: sprint 33
-    duration: 2020-04-14..2020-04-27
-  -
-    title: sprint 34
-    duration: 2020-04-28..2020-05-11
-  -
-    title: sprint 35
-    duration: 2020-05-12..2020-05-25
-  -
-    title: sprint 36
-    duration: 2020-05-26..2020-06-08
-  -
-    title: sprint 37
-    duration: 2020-06-09..2020-06-22
-  -
-    title: sprint 38
-    duration: 2020-06-23..2020-07-06
-  -
-    title: sprint 39
-    duration: 2020-07-07..2020-07-20
-  -
-    title: sprint 40
-    duration: 2020-07-21..2020-08-03
-  -
-    title: sprint 41
-    duration: 2020-08-04..2020-08-17
-  -
     title: Bonus sprint 41
     duration: 2020-08-18..2020-08-24
   -
